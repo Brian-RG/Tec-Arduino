@@ -1,0 +1,46 @@
+import processing.serial.*;
+import cc.arduino.*;
+import org.firmata.*;
+
+Arduino arduino;
+
+void setup(){
+  size(800, 600); //Este es el tamaño de la interfaz.
+  //INPUT 2 SENSOR 1
+  //INPUT 4 SENSOR 2
+  //INPUT 6 SENSOR 3
+  arduino = new Arduino(this, "COM8", 57600);
+  arduino.pinMode(2, Arduino.INPUT);
+  arduino.pinMode(4, Arduino.INPUT);
+  arduino.pinMode(6, Arduino.INPUT);
+}
+
+void draw(){
+  background(255,255,255);
+  if((arduino.digitalRead(2)==Arduino.HIGH && arduino.digitalRead(4)==Arduino.HIGH) || (arduino.digitalRead(2) == Arduino.HIGH && arduino.digitalRead(6)==Arduino.HIGH) || (arduino.digitalRead(4) == Arduino.HIGH && arduino.digitalRead(6) == Arduino.LOW)){
+      background(0,0,0);
+  }
+  if(arduino.digitalRead(2)==Arduino.HIGH){
+      fill(255,0,0);
+      ellipse( 300,100, 50,50);
+      text("hola", 350,300);
+      
+    }  
+  else if(arduino.digitalRead(4)==Arduino.HIGH){
+      fill(0,0,255);
+      rect(300,100,50,50);
+      text("practica 8",350,300);
+
+    }
+  else if(arduino.digitalRead(6)==Arduino.HIGH){
+      fill(0,255,0);
+      triangle(350,100,400,200,300,200);
+      text("Jaja salu2",350,300);
+      
+    }
+   if(arduino.digitalRead(2)==Arduino.LOW && arduino.digitalRead(4)==Arduino.LOW && arduino.digitalRead(6) == Arduino.LOW){
+     fill(255,255,255);
+     rect(0,0,800,600);
+   } 
+    
+  }
